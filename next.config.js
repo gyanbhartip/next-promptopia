@@ -5,6 +5,24 @@
 await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+    experimental: {
+        serverComponentsExternalPackages: ["mongoose"],
+    },
+    images: {
+        remotePatterns: [{
+            protocol: 'https',
+            hostname: 'lh3.googleusercontent.com',
+            port: '',
+        }]
+    },
+    webpack(config) {
+        config.experiments = {
+            ...config.experiments,
+            topLevelAwait: true,
+        }
+        return config
+    }
+};
 
 export default config;

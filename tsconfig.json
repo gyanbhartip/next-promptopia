@@ -26,9 +26,14 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "_/*": ["./src/*"],
+      "_components/*": ["./src/components/*"],
+      "_models/*": ["./src/models/*"],
+      "_styles/*": ["./src/styles/*"],
+      "_utils/*": ["./src/utils/*"]
     }
   },
+  "typeRoots": ["./node_modules/@types", "./src/types"],
   "include": [
     ".eslintrc.cjs",
     "next-env.d.ts",
