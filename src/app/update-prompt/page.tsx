@@ -1,19 +1,17 @@
 "use client";
 
 import Form from "_/components/Form";
-import type { Post } from "_/types";
+import type { PostData } from "_/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useState } from "react";
 
-type Props = unknown;
-
-const EditPrompt = (props: Props) => {
+const EditPrompt = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const promptId = searchParams.get("id");
 
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [post, setPost] = useState<Post>({
+  const [post, setPost] = useState<PostData>({
     prompt: "",
     tag: "",
   });

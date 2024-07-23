@@ -1,6 +1,7 @@
 "use client";
 
 import Profile from "_/components/Profile";
+import type { Post } from "_/types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,13 +10,13 @@ const MyProfile = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const [posts, setPosts] = useState<Array<unknown>>([]);
+  const [posts, setPosts] = useState<Array<Post>>([]);
 
-  const handleEdit = (post) => {
+  const handleEdit = (post: Post) => {
     router.push(`/update-prompt?id=${post._id}`);
   };
 
-  const handleDelete = async (post) => {
+  const handleDelete = async (post: Post) => {
     const hasConfirmed = confirm(
       "Are you sure you want to delete this prompt?",
     );

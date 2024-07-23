@@ -1,23 +1,18 @@
 "use client";
 
+import type { Post } from "_/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { type FC, useState } from "react";
 
 type Props = {
-  post: unknown;
-  handleTagClick: unknown;
-  handleEdit: unknown;
-  handleDelete: unknown;
+  post: Post;
+  handleEdit?: unknown;
+  handleDelete?: unknown;
 };
 
-const PromptCard: FC<Props> = ({
-  post,
-  handleTagClick,
-  handleEdit,
-  handleDelete,
-}) => {
+const PromptCard: FC<Props> = ({ post, handleEdit, handleDelete }) => {
   const { data: session } = useSession();
   const pathName = usePathname();
 
@@ -31,23 +26,34 @@ const PromptCard: FC<Props> = ({
     }, 3000);
   };
 
+  const handleTagClick = (tag: string) => {
+    console.log(tag);
+  };
+
+  const postCreator = post.creator || {
+    username: "",
+    email: "",
+    image: "",
+    _id: "",
+  };
+
   return (
     <div className="prompt_card">
       <div className="flex items-start justify-between gap-5">
         <div className="flex flex-1 cursor-pointer items-center justify-start gap-3">
           <Image
-            alt="user_image"
+            alt="user image"
             className="rounded-full object-contain"
             height={40}
-            src={post.creator.image}
+            src={postCreator.image}
             width={40}
           />
           <div className="flex flex-col">
             <h3 className="font-satoshi font-semibold text-gray-900">
-              {post.creator.username}
+              {postCreator.username}
             </h3>
             <p className="font-inter text-sm text-gray-500">
-              {post.creator.email}
+              {postCreator.email}
             </p>
           </div>
         </div>
@@ -71,7 +77,7 @@ const PromptCard: FC<Props> = ({
       >
         #{post.tag}
       </p>
-      {session?.user?.id === post.creator._id && pathName === "/profile" && (
+      {session?.user?.id === postCreator._id && pathName === "/profile" && (
         <div className="flex-center mt-5 gap-4 border-t border-gray-100 pt-3">
           <p
             className="green_gradient cursor-pointer font-inter text-sm"

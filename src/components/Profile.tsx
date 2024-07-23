@@ -1,12 +1,13 @@
+import type { Post } from "_/types";
 import type { FC } from "react";
 import PromptCard from "./PromptCard";
 
 type Props = {
   name: string;
   desc: string;
-  data: Array<unknown>;
-  handleEdit: (post: unknown) => void;
-  handleDelete: () => void;
+  data: Array<Post>;
+  handleEdit: (post: Post) => void;
+  handleDelete: (post: Post) => Promise<void>;
 };
 
 const Profile: FC<Props> = ({ name, desc, data, handleEdit, handleDelete }) => {

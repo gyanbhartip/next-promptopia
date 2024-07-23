@@ -2,12 +2,11 @@
 
 import { type ChangeEvent, useEffect, useState } from "react";
 import PromptCardList from "./PromptCardList";
+import type { Post } from "_/types";
 
-type Props = unknown;
-
-const Feed = (props: Props) => {
+const Feed = () => {
   const [searchText, setSearchText] = useState("");
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Array<Post>>([]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {};
 
@@ -16,9 +15,10 @@ const Feed = (props: Props) => {
       try {
         const response = await fetch("/api/prompt");
 
-        const data = await response.json();
-
-        setPosts(data);
+        if (response.ok) {
+          const data: Array<Post> | [] = await response.json();
+          setPosts(data);
+        }
       } catch (error) {
         console.error("Error fetching prompts", error);
       }

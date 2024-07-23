@@ -1,14 +1,11 @@
-import type { Post } from "_/types";
+import type { PostData } from "_/types";
 import Link from "next/link";
 import type { Dispatch, FC, FormEventHandler, SetStateAction } from "react";
 
 type Props = {
   type: "Create" | "Edit";
-  post: {
-    prompt: string;
-    tag: string;
-  };
-  setPost: Dispatch<SetStateAction<Post>>;
+  post: PostData;
+  setPost: Dispatch<SetStateAction<PostData>>;
   submitting: boolean;
   handleSubmit: FormEventHandler<HTMLFormElement>;
 };
