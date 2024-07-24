@@ -1,4 +1,5 @@
 import Prompt from "_/models/prompt";
+import type { PostData } from "_/types";
 import { connectToDB } from "_/utils/database";
 import { type NextRequest, NextResponse } from "next/server";
 
@@ -35,7 +36,7 @@ export const PATCH = async (
   request: NextRequest,
   context: { params: Params },
 ) => {
-  const { prompt, tag } = await request.json();
+  const { prompt, tag } = (await request.json()) as PostData;
   try {
     await connectToDB();
     const existingPrompt = await Prompt.findById(context.params.id);

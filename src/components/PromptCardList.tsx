@@ -4,14 +4,16 @@ import PromptCard from "./PromptCard";
 
 type Props = {
   data: Array<Post>;
-  handleTagClick: () => void;
+  handleTagClick: (tag: string) => void;
 };
 
 const PromptCardList: FC<Props> = ({ data = [], handleTagClick }) => {
   return (
     <div className="prompt_layout mt-16">
       {data.map((prompt) => (
-        <PromptCard post={prompt} key={prompt._id} />
+        <div key={prompt._id} onClick={() => handleTagClick(prompt.prompt)}>
+          <PromptCard post={prompt} />
+        </div>
       ))}
     </div>
   );

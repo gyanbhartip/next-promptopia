@@ -8,7 +8,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "deps:update": "npx npm-check-updates --interactive --format group"
+    "deps:update": "bunx npm-check-updates --root --format group -i"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.10.1",

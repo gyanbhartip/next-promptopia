@@ -3,7 +3,11 @@ import { connectToDB } from "_/utils/database";
 import { type NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
-  const { userId, prompt, tag } = await req.json();
+  const { userId, prompt, tag } = (await req.json()) as {
+    userId: string;
+    prompt: string;
+    tag: string;
+  };
   try {
     await connectToDB();
 

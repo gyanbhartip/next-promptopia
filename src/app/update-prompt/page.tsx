@@ -1,7 +1,7 @@
 "use client";
 
 import Form from "_/components/Form";
-import type { PostData } from "_/types";
+import type { Post, PostData } from "_/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useState } from "react";
 
@@ -46,7 +46,7 @@ const EditPrompt = () => {
   useEffect(() => {
     const getPromptDetail = async () => {
       const response = await fetch(`/api/prompt/${promptId}`);
-      const data = await response.json();
+      const data = (await response.json()) as Post;
 
       setPost({
         prompt: data.prompt,

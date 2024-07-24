@@ -42,7 +42,7 @@ const MyProfile = () => {
       try {
         const response = await fetch(`/api/users/${id}/posts`);
 
-        const data = await response.json();
+        const data = (await response.json()) as Array<Post>;
 
         setPosts(data);
       } catch (error) {

@@ -21,17 +21,20 @@ const CreatePrompt = () => {
     setSubmitting(true);
 
     try {
-      const response = await fetch("/api/prompt/new", {
-        method: "POST",
-        body: JSON.stringify({
-          prompt: post.prompt,
-          tag: post.tag,
-          userId: session?.user?.id,
-        }),
-      });
-      if (response.ok) {
-        setPost({ prompt: "", tag: "" });
-        router.push("/");
+      if (typeof session?.user?.id === "string") {
+        const response = await fetch("/api/prompt/new", {
+          method: "POST",
+          body: JSON.stringify({
+            prompt: post.prompt,
+            tag: post.tag,
+            userId: session.user.id,
+          }),
+        });
+
+        if (response.ok) {
+          setPost({ prompt: "", tag: "" });
+          router.push("/");
+        }
       }
     } catch (error) {
       console.error("Error occurred while creating prompt", error);

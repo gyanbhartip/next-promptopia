@@ -8,7 +8,13 @@ const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState<Array<Post>>([]);
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {};
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleTagClick = (tag: string) => {
+    setSearchText(tag);
+  };
 
   useEffect(() => {
     const fetchPrompts = async () => {
@@ -16,7 +22,7 @@ const Feed = () => {
         const response = await fetch("/api/prompt");
 
         if (response.ok) {
-          const data: Array<Post> | [] = await response.json();
+          const data = (await response.json()) as Array<Post>;
           setPosts(data);
         }
       } catch (error) {
@@ -41,7 +47,7 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList data={posts} handleTagClick={() => {}} />
+      <PromptCardList data={posts} handleTagClick={handleTagClick} />
     </section>
   );
 };
