@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 /**
  *this line will avoid caching when deployed to vercel
  */
-export const revalidate: false | 0 | number = 0;
+export const revalidate: false | number = false;
 
 export const GET = async () => {
   try {

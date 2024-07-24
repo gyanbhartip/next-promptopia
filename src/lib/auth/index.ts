@@ -1,17 +1,18 @@
 import User from "_/models/user";
 import { connectToDB } from "_/utils/database";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthConfig, Profile, Session } from "next-auth";
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions = {
+const authOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
     }),
   ],
   callbacks: {
-    async session({ session }) {
+    async session({ session }: { session: Session }) {
       const sessionUser = await User.findOne({
         email: session?.user?.email,
       });
@@ -22,7 +23,7 @@ export const authOptions = {
       };
     },
 
-    async signIn({ profile }) {
+    async signIn({ profile }: { profile?: Profile }) {
       try {
         await connectToDB();
         const userExists = await User.findOne({ email: profile?.email });
@@ -31,7 +32,7 @@ export const authOptions = {
           await User.create({
             email: profile?.email,
             username: profile?.name?.replace(" ", "").toLowerCase(),
-            image: profile?.picture,
+            image: typeof profile?.picture === "string" ? profile.picture : "",
           });
         }
 
@@ -42,4 +43,6 @@ export const authOptions = {
       }
     },
   },
-} satisfies NextAuthOptions;
+} satisfies NextAuthConfig;
+
+export const { auth, handlers, signIn, signOut } = NextAuth(authOptions);

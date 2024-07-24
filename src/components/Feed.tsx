@@ -23,7 +23,9 @@ const Feed = () => {
         console.error("Error fetching prompts", error);
       }
     };
-    fetchPrompts();
+    fetchPrompts().catch((error) =>
+      console.error("Error fetching prompts", error),
+    );
   }, []);
 
   return (

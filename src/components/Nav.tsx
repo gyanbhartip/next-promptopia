@@ -14,11 +14,24 @@ const Nav: FC<Props> = () => {
   const [providers, setProviders] =
     useState<Awaited<ReturnType<typeof getProviders>>>(null);
 
+  const signOutHandler = () => {
+    signOut()
+      .then(() => {
+        setToggleDropdown(false);
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+    toggleDropdown && setToggleDropdown(false);
+  };
+
   useEffect(() => {
     (async () => {
       const res = await getProviders();
       setProviders(res);
-    })();
+    })().catch((error) => {
+      console.error("Error getting providers:", error);
+    });
   }, []);
 
   return (
@@ -41,7 +54,11 @@ const Nav: FC<Props> = () => {
             <Link href={"/create-prompt"} className="black_btn">
               Create Post
             </Link>
-            <button type="button" onClick={signOut} className="outline_btn">
+            <button
+              type="button"
+              onClick={signOutHandler}
+              className="outline_btn"
+            >
               Sign Out
             </button>
             <Link href={"/profile"}>
@@ -49,7 +66,7 @@ const Nav: FC<Props> = () => {
                 alt={"profile"}
                 className="rounded-full"
                 height={37}
-                src={session?.user.image || "/assets/icons/loader.svg"}
+                src={session?.user.image ?? "/assets/icons/loader.svg"}
                 width={37}
               />
             </Link>
@@ -79,32 +96,41 @@ const Nav: FC<Props> = () => {
               className="rounded-full"
               height={37}
               onClick={() => setToggleDropdown((prev) => !prev)}
-              src={session?.user.image || "/assets/icons/loader.svg"}
+              src={"/assets/icons/menu.svg"}
               width={37}
             />
             {toggleDropdown && (
               <div className="dropdown">
-                <Link
-                  href={"/profile"}
-                  className="dropdown_link"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  My Profile
-                </Link>
-                <Link
-                  href={"/create-prompt"}
-                  className="dropdown_link"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  Create Prompt
-                </Link>
+                <div className="flex w-full items-center justify-between">
+                  <Image
+                    alt={"profile"}
+                    className="rounded-full"
+                    height={37}
+                    onClick={() => setToggleDropdown((prev) => !prev)}
+                    src={session?.user.image ?? "/assets/icons/loader.svg"}
+                    width={37}
+                  />
+                  <div className="flex flex-col gap-2">
+                    <Link
+                      href={"/profile"}
+                      className="dropdown_link"
+                      onClick={() => setToggleDropdown(false)}
+                    >
+                      My Profile
+                    </Link>
+                    <Link
+                      href={"/create-prompt"}
+                      className="dropdown_link"
+                      onClick={() => setToggleDropdown(false)}
+                    >
+                      Create Post
+                    </Link>
+                  </div>
+                </div>
                 <button
-                  className="black_btn mt-5 w-full"
+                  className="black_btn mt-3 w-full"
                   type="button"
-                  onClick={() => {
-                    signOut();
-                    setToggleDropdown(false);
-                  }}
+                  onClick={signOutHandler}
                 >
                   Sign Out
                 </button>

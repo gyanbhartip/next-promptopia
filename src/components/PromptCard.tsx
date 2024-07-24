@@ -18,9 +18,9 @@ const PromptCard: FC<Props> = ({ post, handleEdit, handleDelete }) => {
 
   const [copied, setCopied] = useState<string>("");
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     setCopied(post.prompt);
-    navigator.clipboard.writeText(post.prompt);
+    await navigator.clipboard.writeText(post.prompt);
     setTimeout(() => {
       setCopied("");
     }, 3000);

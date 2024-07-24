@@ -1,9 +1,10 @@
 import Nav from "_/components/Nav";
 import Provider from "_/components/Provider";
+import { auth } from "_/lib/auth";
 import "_styles/globals.css";
-
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
+import type { Session } from "next-auth";
 import type { FC, ReactNode } from "react";
 
 export const metadata: Metadata = {
@@ -16,11 +17,17 @@ type Props = {
   children: ReactNode;
 };
 
-const RootLayout: FC<Props> = ({ children }) => {
+const RootLayout: FC<Props> = async ({ children }) => {
+  let session: Session | null = null;
+  try {
+    session = await auth();
+  } catch (error) {
+    console.error("Error getting session:", error);
+  }
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <Provider>
+        <Provider session={session}>
           <div className="main">
             <div className="gradient" />
           </div>

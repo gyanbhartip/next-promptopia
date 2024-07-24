@@ -55,7 +55,9 @@ const EditPrompt = () => {
     };
 
     if (promptId) {
-      getPromptDetail();
+      getPromptDetail().catch((error) =>
+        console.error("Error fetching prompt", error),
+      );
     }
   }, [promptId]);
 

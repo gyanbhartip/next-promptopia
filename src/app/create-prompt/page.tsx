@@ -6,9 +6,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 
-type Props = unknown;
-
-const CreatePrompt = (props: Props) => {
+const CreatePrompt = () => {
   const { data: session } = useSession();
   const router = useRouter();
 

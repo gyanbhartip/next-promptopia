@@ -50,7 +50,9 @@ const MyProfile = () => {
       }
     };
     if (session?.user?.id) {
-      fetchPrompts(session.user.id);
+      fetchPrompts(session.user.id).catch((error) =>
+        console.error("Error fetching prompts", error),
+      );
     }
   }, [session?.user?.id]);
 
