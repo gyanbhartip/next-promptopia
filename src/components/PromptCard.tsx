@@ -8,8 +8,8 @@ import { type FC, useState } from "react";
 
 type Props = {
   post: Post;
-  handleEdit?: unknown;
-  handleDelete?: unknown;
+  handleEdit?: (post: Post) => void;
+  handleDelete?: (post: Post) => Promise<void>;
 };
 
 const PromptCard: FC<Props> = ({ post, handleEdit, handleDelete }) => {
