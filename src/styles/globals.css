@@ -141,7 +141,7 @@
   }
 
   .dropdown {
-    @apply absolute right-0 top-full mt-3 flex w-full min-w-[210px] flex-col items-end justify-end gap-2 rounded-lg bg-white p-5;
+    @apply absolute right-0 top-full mt-3 flex w-full min-w-[210px] flex-col items-end justify-end gap-2 rounded-lg border border-[#80808059] bg-white p-5 shadow-[5px_5px_15px_0px_rgba(0,0,0,0.2)];
   }
 
   .dropdown_link {

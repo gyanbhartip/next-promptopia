@@ -1,3 +1,5 @@
+"use client";
+
 import Form from "_/components/Form";
 import type { Post, PostData } from "_/types";
 import { useRouter, useSearchParams } from "next/navigation";
