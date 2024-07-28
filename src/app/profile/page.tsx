@@ -44,7 +44,6 @@ const MyProfile = () => {
 
   useEffect(() => {
     const fetchPrompts = async (id: string) => {
-      console.log("id: ", id);
       try {
         const response = await fetch(`/api/users/${id}/posts`);
 
