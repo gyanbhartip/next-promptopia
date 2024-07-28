@@ -11,8 +11,8 @@ const PromptCardList: FC<Props> = ({ data = [], handleTagClick }) => {
   return (
     <div className="prompt_layout mt-16">
       {data.map((prompt) => (
-        <div key={prompt._id} onClick={() => handleTagClick(prompt.tag)}>
-          <PromptCard post={prompt} />
+        <div key={prompt._id}>
+          <PromptCard post={prompt} handleTagClick={handleTagClick} />
         </div>
       ))}
     </div>

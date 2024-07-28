@@ -3,10 +3,12 @@
 import { getProviders, signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { type FC, useEffect, useState } from "react";
 type Props = unknown;
 
 const Nav: FC<Props> = () => {
+  const router = useRouter();
   const { data: session } = useSession();
 
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
@@ -61,7 +63,9 @@ const Nav: FC<Props> = () => {
             >
               Sign Out
             </button>
-            <Link href={"/profile"}>
+            <Link
+              href={`/profile?id=${session?.user?.id}&name=${session?.user?.name}`}
+            >
               <Image
                 alt={"profile"}
                 className="rounded-full"
@@ -104,15 +108,20 @@ const Nav: FC<Props> = () => {
                 <div className="flex w-full items-center justify-between">
                   <Image
                     alt={"profile"}
-                    className="rounded-full"
+                    className="cursor-pointer rounded-full"
                     height={37}
-                    onClick={() => setToggleDropdown((prev) => !prev)}
+                    onClick={() => {
+                      router.push(
+                        `/profile?id=${session?.user?.id}&name=${session?.user?.name}`,
+                      );
+                      setToggleDropdown((prev) => !prev);
+                    }}
                     src={session?.user.image ?? "/assets/icons/loader.svg"}
                     width={37}
                   />
                   <div className="flex flex-col gap-2">
                     <Link
-                      href={"/profile"}
+                      href={`/profile?id=${session?.user.id}&name=${session?.user.name}`}
                       className="dropdown_link"
                       onClick={() => setToggleDropdown(false)}
                     >

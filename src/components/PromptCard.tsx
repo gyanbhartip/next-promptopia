@@ -10,9 +10,15 @@ type Props = {
   post: Post;
   handleEdit?: () => void;
   handleDelete?: () => void;
+  handleTagClick?: (tag: string) => void;
 };
 
-const PromptCard: FC<Props> = ({ post, handleEdit, handleDelete }) => {
+const PromptCard: FC<Props> = ({
+  post,
+  handleEdit,
+  handleDelete,
+  handleTagClick,
+}) => {
   const { data: session } = useSession();
   const pathName = usePathname();
 
@@ -26,8 +32,8 @@ const PromptCard: FC<Props> = ({ post, handleEdit, handleDelete }) => {
     }, 3000);
   };
 
-  const handleTagClick = (tag: string) => {
-    console.log(tag);
+  const handleProfileClick = () => {
+    window.location.href = `/profile/?id=${post.creator?._id}&name=${postCreator?.username}`;
   };
 
   const postCreator = post.creator || {
@@ -40,7 +46,10 @@ const PromptCard: FC<Props> = ({ post, handleEdit, handleDelete }) => {
   return (
     <div className="prompt_card">
       <div className="flex items-start justify-between gap-5">
-        <div className="flex flex-1 cursor-pointer items-center justify-start gap-3">
+        <div
+          className="flex flex-1 cursor-pointer items-center justify-start gap-3"
+          onClick={handleProfileClick}
+        >
           <Image
             alt="user image"
             className="rounded-full object-contain"

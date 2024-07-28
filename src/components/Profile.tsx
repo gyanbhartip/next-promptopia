@@ -10,7 +10,13 @@ type Props = {
   handleDelete: (post: Post) => Promise<void>;
 };
 
-const Profile: FC<Props> = ({ name, desc, data, handleEdit, handleDelete }) => {
+const Profile: FC<Props> = ({
+  name,
+  desc,
+  data = [],
+  handleEdit,
+  handleDelete,
+}) => {
   return (
     <section className="w-full">
       <h1 className="head_text text-left">
@@ -19,7 +25,7 @@ const Profile: FC<Props> = ({ name, desc, data, handleEdit, handleDelete }) => {
       <p className="desc text-left">{desc}</p>
 
       <div className="prompt_layout mt-10">
-        {data.map((post) => (
+        {data?.map((post) => (
           <PromptCard
             post={post}
             key={post._id}
